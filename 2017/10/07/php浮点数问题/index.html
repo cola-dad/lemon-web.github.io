@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>php浮点数问题 | lemon的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039  再看另一段代码：   1234567$a = 20.4;$b = $a * 100; //其实很多小数都有类似问题，也不限于PHPecho (string) $b . PHP_EO">
+  <meta name="description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039">
 <meta name="keywords" content="php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php浮点数问题">
 <meta property="og:url" content="http://yoursite.com/2017/10/07/php浮点数问题/index.html">
 <meta property="og:site_name" content="lemon的博客">
-<meta property="og:description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039  再看另一段代码：   1234567$a = 20.4;$b = $a * 100; //其实很多小数都有类似问题，也不限于PHPecho (string) $b . PHP_EO">
-<meta property="og:updated_time" content="2017-10-07T09:45:26.717Z">
+<meta property="og:description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039">
+<meta property="og:updated_time" content="2017-10-07T10:03:14.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php浮点数问题">
-<meta name="twitter:description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039  再看另一段代码：   1234567$a = 20.4;$b = $a * 100; //其实很多小数都有类似问题，也不限于PHPecho (string) $b . PHP_EO">
+<meta name="twitter:description" content="一、两个浮点数运算问题1、小数乘以100 代码： 1234$a = 20.40;echo $a.PHP_EOL;$b = intval($a*100);echo $b.PHP_EOL;  结果： 1220.42039">
   
     <link rel="alternative" href="/atom.xml" title="lemon的博客" type="application/atom+xml">
   
@@ -235,8 +235,10 @@ var _hmt = _hmt || [];
 <li><p>结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">20.4</div><div class="line">2039</div></pre></td></tr></table></figure>
 </li>
-<li><p>再看另一段代码：</p>
-</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>再看另一段代码：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = 20.4;</div><div class="line">$b = $a * 100; //其实很多小数都有类似问题，也不限于PHP</div><div class="line">echo (string) $b . PHP_EOL;</div><div class="line">echo (int) $b .PHP_EOL;</div><div class="line">echo floor($b) .PHP_EOL;</div><div class="line">echo ceil($b) . PHP_EOL;</div><div class="line">echo (int)(string) $b . PHP_EOL;</div></pre></td></tr></table></figure>
 <ul>
