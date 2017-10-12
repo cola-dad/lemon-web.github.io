@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>序言 | lemon的博客</title>
+  <title>private和protected的问题 | lemon的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、由来1、前世 其实，在一年以前我就已经用hexo加github搭建过个人的博客。去年的时候，偶然看到我一个高中好哥们的博客,他的博客就是用hexo+github搭的，不过那个时候仅仅是想作为一个相册使用，里面放的都是我自己和女朋友的一些照片。后来，懒得去维护了，空间和域名都渐渐荒废了。之前的那个博客可以算的上是这个的前世">
-<meta name="keywords" content="随笔">
+  <meta name="description" content="一、二者区别 加上public      内部 子类 外部     public √ √ √   protected √ √ ×   private √ × ×">
+<meta name="keywords" content="问题探究">
 <meta property="og:type" content="article">
-<meta property="og:title" content="序言">
-<meta property="og:url" content="http://yoursite.com/2017/10/06/随笔/index.html">
+<meta property="og:title" content="private和protected的问题">
+<meta property="og:url" content="http://yoursite.com/2017/10/12/private和protected的问题/index.html">
 <meta property="og:site_name" content="lemon的博客">
-<meta property="og:description" content="一、由来1、前世 其实，在一年以前我就已经用hexo加github搭建过个人的博客。去年的时候，偶然看到我一个高中好哥们的博客,他的博客就是用hexo+github搭的，不过那个时候仅仅是想作为一个相册使用，里面放的都是我自己和女朋友的一些照片。后来，懒得去维护了，空间和域名都渐渐荒废了。之前的那个博客可以算的上是这个的前世">
-<meta property="og:updated_time" content="2017-10-09T01:55:23.423Z">
+<meta property="og:description" content="一、二者区别 加上public      内部 子类 外部     public √ √ √   protected √ √ ×   private √ × ×">
+<meta property="og:updated_time" content="2017-10-12T12:18:01.022Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="序言">
-<meta name="twitter:description" content="一、由来1、前世 其实，在一年以前我就已经用hexo加github搭建过个人的博客。去年的时候，偶然看到我一个高中好哥们的博客,他的博客就是用hexo+github搭的，不过那个时候仅仅是想作为一个相册使用，里面放的都是我自己和女朋友的一些照片。后来，懒得去维护了，空间和域名都渐渐荒废了。之前的那个博客可以算的上是这个的前世">
+<meta name="twitter:title" content="private和protected的问题">
+<meta name="twitter:description" content="一、二者区别 加上public      内部 子类 外部     public √ √ √   protected √ √ ×   private √ × ×">
   
     <link rel="alternative" href="/atom.xml" title="lemon的博客" type="application/atom+xml">
   
@@ -182,22 +182,22 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-随笔" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-private和protected的问题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      序言
+      private和protected的问题
     </h1>
   
 
         <!-- 显示阅读和评论数 -->
         
         
-        <a href="/2017/10/06/随笔/" class="archive-article-date">
-  	<time datetime="2017-10-06T03:53:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-06</time>
+        <a href="/2017/10/12/private和protected的问题/" class="archive-article-date">
+  	<time datetime="2017-10-12T12:08:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-12</time>
 </a>
         
       </header>
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     	<div id="toc-article" class="toc-article">
     	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
     		<strong class="toc-title">文章目录</strong>
-               <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、由来"><span class="toc-number">1.</span> <span class="toc-text">一、由来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、前世"><span class="toc-number">1.1.</span> <span class="toc-text">1、前世</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、今生"><span class="toc-number">1.2.</span> <span class="toc-text">2、今生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、展望"><span class="toc-number">2.</span> <span class="toc-text">二、展望</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、博客"><span class="toc-number">2.1.</span> <span class="toc-text">1、博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、go"><span class="toc-number">2.2.</span> <span class="toc-text">2、go</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、money"><span class="toc-number">2.3.</span> <span class="toc-text">3、money</span></a></li></ol></li></ol>
+               <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、二者区别"><span class="toc-number">1.</span> <span class="toc-text">一、二者区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、问题分析"><span class="toc-number">2.</span> <span class="toc-text">二、问题分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-看下面两段代码"><span class="toc-number">2.1.</span> <span class="toc-text">(1)看下面两段代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-结论"><span class="toc-number">2.2.</span> <span class="toc-text">(2)结论</span></a></li></ol></li></ol>
              </div>
        <script type="text/javascript">
     	function showToc(){
@@ -231,22 +231,57 @@ var _hmt = _hmt || [];
     <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、由来"><a href="#一、由来" class="headerlink" title="一、由来"></a>一、由来</h2><h3 id="1、前世"><a href="#1、前世" class="headerlink" title="1、前世"></a>1、前世</h3><blockquote>
-<p>其实，在一年以前我就已经用hexo加github搭建过个人的博客。去年的时候，偶然看到我一个高中<a href="http://www.xiaxiongfeng.com/" target="_blank" rel="external">好哥们的博客</a>,他的博客就是用hexo+github搭的，不过那个时候仅仅是想作为一个相册使用，里面放的都是我自己和女朋友的一些照片。后来，懒得去维护了，空间和域名都渐渐荒废了。之前的那个博客可以算的上是这个的<strong>前世</strong></p>
-</blockquote>
+        <h2 id="一、二者区别"><a href="#一、二者区别" class="headerlink" title="一、二者区别"></a>一、二者区别</h2><ul>
+<li>加上public</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>内部</th>
+<th>子类</th>
+<th>外部</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>private</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
 <a id="more"></a>
-<h3 id="2、今生"><a href="#2、今生" class="headerlink" title="2、今生"></a>2、今生</h3><blockquote>
-<p>前段时间申请了自己的一个域名:lili-web.com,想着去阿里云买一台服务器，搭一个自己的技术博客。去阿里云上的服务器看了下价格，摸了摸自己的荷包，并且买了服务器还得去备案，麻烦~正愁着咋办，我突然想起，自己一年多用github+hexo搭建博客，不仅免费，而且不用去备案。于是开干，在网上参考了别人搭建github博客的文章，花了一天多的时间，搭建了该博客！</p>
-</blockquote>
-<h2 id="二、展望"><a href="#二、展望" class="headerlink" title="二、展望"></a>二、展望</h2><h3 id="1、博客"><a href="#1、博客" class="headerlink" title="1、博客"></a>1、博客</h3><blockquote>
-<p>先定一个小目标，比如说。。。。。，想多了。。。。，坚持每周写一篇博客，不管是技术的还是其他的</p>
-</blockquote>
-<h3 id="2、go"><a href="#2、go" class="headerlink" title="2、go"></a>2、go</h3><blockquote>
-<p>本人是从事拍黄片工作的，感觉拍黄片能做的事还是比较局限，进来在学习golang</p>
-</blockquote>
-<h3 id="3、money"><a href="#3、money" class="headerlink" title="3、money"></a>3、money</h3><blockquote>
-<p>我博客取名叫lemon，其实是取得“来 money”的意思，简称lemon~要结婚、还贷、装修等等，到处是花钱的地方，所以要赶紧挣钱了。。。大家有网站开发类的私活可以找我哈~</p>
-</blockquote>
+<h2 id="二、问题分析"><a href="#二、问题分析" class="headerlink" title="二、问题分析"></a>二、问题分析</h2><h3 id="1-看下面两段代码"><a href="#1-看下面两段代码" class="headerlink" title="(1)看下面两段代码"></a>(1)看下面两段代码</h3><ul>
+<li>代码1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Human &#123;</div><div class="line">    protected $name = &apos;li san&apos;;</div><div class="line">    protected $money;</div><div class="line">    public $age ;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Stu extends Human &#123;</div><div class="line"></div><div class="line">    public function __construct()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;name = &apos;li si&apos;;</div><div class="line">        $this-&gt;money = 300;</div><div class="line">        $this-&gt;age = 26;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private $friend = &apos;zhang san&apos;;</div><div class="line"></div><div class="line">    public function talk() &#123;</div><div class="line">        echo &apos;我叫&apos;.$this-&gt;name.PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$ming = new Stu();</div><div class="line">$ming-&gt;talk();</div><div class="line">echo $ming-&gt;name.PHP_EOL;</div></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">我叫li si</div><div class="line">PHP Fatal error:  Cannot access protected property Stu::$name</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>将类human中的name属性改为 private，得到代码2</p>
+</li>
+<li><p>代码2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Human &#123;</div><div class="line">    private $name = &apos;li san&apos;;</div><div class="line">    protected $money;</div><div class="line">    public $age ;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Stu extends Human &#123;</div><div class="line"></div><div class="line">    public function __construct()</div><div class="line">    &#123;</div><div class="line">        $this-&gt;name = &apos;li si&apos;;</div><div class="line">        $this-&gt;money = 300;</div><div class="line">        $this-&gt;age = 26;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private $friend = &apos;zhang san&apos;;</div><div class="line"></div><div class="line">    public function talk() &#123;</div><div class="line">        echo &apos;我叫&apos;.$this-&gt;name.PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$ming = new Stu();</div><div class="line">$ming-&gt;talk();</div><div class="line">echo $ming-&gt;name.PHP_EOL;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">我叫li si</div><div class="line">li si</div></pre></td></tr></table></figure></p>
+<h3 id="2-结论"><a href="#2-结论" class="headerlink" title="(2)结论"></a>(2)结论</h3><ul>
+<li>代码1中name属性为protected ，代码2中为private，为什么在代码1中访问name会报错，反而2中不会报错</li>
+<li>根据上面的private和protected的区别，父类的name为private时，子类时访问不到的，此时子类的构造方法里面$this-&gt;name，相当于==新建了一个name属性且为public==，所以能访问；父类的name为protected时，==子类修改的其实是继承过来的protected属性==，外部当然不能访问了</li>
+</ul>
 
       
 
@@ -291,7 +326,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">问题探究</a>
         		</li>
       		
 		</ul>
@@ -347,7 +382,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/06/随笔/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/12/private和protected的问题/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -361,18 +396,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2017/10/07/php浮点数问题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          php浮点数问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/05/Github-Hexo搭建博客/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Github+Hexo搭建博客</div>
+    <a href="/2017/10/07/php浮点数问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">php浮点数问题</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -399,7 +425,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、由来"><span class="toc-number">1.</span> <span class="toc-text">一、由来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、前世"><span class="toc-number">1.1.</span> <span class="toc-text">1、前世</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、今生"><span class="toc-number">1.2.</span> <span class="toc-text">2、今生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、展望"><span class="toc-number">2.</span> <span class="toc-text">二、展望</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、博客"><span class="toc-number">2.1.</span> <span class="toc-text">1、博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、go"><span class="toc-number">2.2.</span> <span class="toc-text">2、go</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、money"><span class="toc-number">2.3.</span> <span class="toc-text">3、money</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、二者区别"><span class="toc-number">1.</span> <span class="toc-text">一、二者区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、问题分析"><span class="toc-number">2.</span> <span class="toc-text">二、问题分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-看下面两段代码"><span class="toc-number">2.1.</span> <span class="toc-text">(1)看下面两段代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-结论"><span class="toc-number">2.2.</span> <span class="toc-text">(2)结论</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
