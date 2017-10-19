@@ -209,76 +209,10 @@ var _hmt = _hmt || [];
 <ul>
 <li>从数据结构及算法理论层面讨论MySQL数据库索引的数理基础。</li>
 <li>MySQL数据库中MyISAM和InnoDB数据存储引擎中索引的架构实现讨论聚集索引、非聚集索引及覆盖索引等</li>
-<li>探讨如何在MySQL中高性能使用索引的</li>
-</ul>
-<h2 id="数据结构和算法"><a href="#数据结构和算法" class="headerlink" title="数据结构和算法"></a>数据结构和算法</h2><h3 id="索引本质"><a href="#索引本质" class="headerlink" title="索引本质"></a>索引本质</h3><blockquote>
-<p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
-</blockquote>
-<p>我们知道，数据库查询是数据库的最主要功能之一。我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。最基本的查询算法当然是顺序查找（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如二分查找（binary search）、二叉树查找（binary tree search）等。如果稍微分析一下会发现，<strong>每种查找算法都只能应用于特定的数据结构之上</strong>，例如二分查找要求被检索数据有序，而二叉树查找只能应用于二叉查找树上，但是<strong>数据本身的组织结构不可能完全满足各种数据结构（例如，理论上不可能同时将两列都按顺序进行组织），所以，在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。这种数据结构，就是索引。</strong></p>
-<ul>
-<li><p>看个例子</p>
-</li>
-<li><p><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_1.png" alt="Alt text"></p>
-</li>
-<li><p>图中展示了一种可能的索引方式。左边是数据表，一共有两列七条记录，最左边的是数据记录的物理地址（注意逻辑上相邻的记录在磁盘上也并不是一定物理相邻的）。为了加快Col2的查找，可以维护一个右边所示的二叉查找树，每个节点分别包含索引键值和一个指向对应数据记录物理地址的指针，这样就可以运用二叉查找在O(log2n)O(log2n)的复杂度内获取到相应数据。</p>
-</li>
-</ul>
-<p>这是一个货真价实的索引，但是实际的数据库系统几乎没有使用二叉查找树或其进化品种红黑树（red-black tree）实现的，原因会在下文介绍。</p>
-<h3 id="B-Tree和B-Tree"><a href="#B-Tree和B-Tree" class="headerlink" title="B-Tree和B+Tree"></a>B-Tree和B+Tree</h3><p>目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构，在本文的下一节会结合存储器原理及计算机存取原理讨论为什么B-Tree和B+Tree在被如此广泛用于索引，这一节先单纯从数据结构角度描述它们。</p>
-<h4 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h4><p>为了描述B-Tree，首先定义一条数据记录为一个二元组[key, data]，key为记录的键值，对于不同数据记录，key是互不相同的；data为数据记录除key外的数据。那么B-Tree是满足下列条件的数据结构：</p>
-<ol>
-<li>d为大于1的一个正整数，称为B-Tree的度。<br>2.h为一个正整数，称为B-Tree的高度。</li>
-<li>每个非叶子节点由n-1个key和n个指针组成，其中d&lt;=n&lt;=2d。</li>
-<li>每个叶子节点最少包含一个key和两个指针，最多包含2d-1个key和2d个指针，叶节点的指针均为null 。<br>5.所有叶节点具有相同的深度，等于树高h。<br>6.key和指针互相间隔，节点两端是指针。<br>7.一个节点中的key从左到右非递减排列。<br>8.所有节点组成树结构。</li>
-<li>每个指针要么为null，要么指向另外一个节点。</li>
-<li>如果某个指针在节点node最左边且不为null，则其指向节点的所有key小于v(key1)，其中v(key1)为node的第一个key的值。</li>
-<li>如果某个指针在节点node最右边且不为null，则其指向节点的所有key大于v(keym)，其中v(keym)为node的最后一个key的值。</li>
-<li>如果某个指针在节点node的左右相邻key分别是keyi和keyi+1且不为null，则其指向节点的所有key小于v(keyi+1)且大于v(keyi)。</li>
-</ol>
-<p>如图是个d=2的B-Tree示意图</p>
-<ul>
-<li><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_2.png" alt="Alt text"></li>
-</ul>
-<p>由于B-Tree的特性，在B-Tree中按key检索数据的算法非常直观：<strong>首先从根节点进行二分查找，如果找到则返回对应节点的data，否则对相应区间的指针指向的节点递归进行查找，直到找到节点或找到null指针，前者查找成功，后者查找失败</strong>。B-Tree上查找算法的伪代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">BTree_Search(node, key)</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">     if(node == null) return null;</div><div class="line"></div><div class="line">     foreach(node.key)</div><div class="line"></div><div class="line">     &#123;</div><div class="line"></div><div class="line">         if(node.key[i] == key) return node.data[i];</div><div class="line"></div><div class="line">         if(node.key[i] &gt; key) return BTree_Search(point[i]-&gt;node);</div><div class="line"></div><div class="line">     &#125;</div><div class="line"></div><div class="line">     return BTree_Search(point[i+1]-&gt;node);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"> data = BTree_Search(root, my_key);</div></pre></td></tr></table></figure>
-<p>关于B-Tree有一系列有趣的性质，例如<strong>一个度为d的B-Tree，设其索引N个key，则其树高h的上限为logd((N+1)/2)，检索一个key，其查找节点个数的渐进复杂度为O(logdN)</strong>。从这点可以看出，B-Tree是一个非常有效率的索引数据结构。</p>
-<p>另外，由于插入删除新的数据记录会破坏B-Tree的性质，因此在插入删除时，需要对树进行一个分裂、合并、转移等操作以保持B-Tree性质，本文不打算完整讨论B-Tree这些内容，因为已经有许多资料详细说明了B-Tree的数学性质及插入删除算法。</p>
-<h4 id="B-Tree-1"><a href="#B-Tree-1" class="headerlink" title="B+Tree"></a>B+Tree</h4><p>B-Tree有许多变种，其中最常见的是B+Tree，例如MySQL就普遍使用B+Tree实现其索引结构。</p>
-<p>与B-Tree相比，B+Tree有以下不同点：<br>1.每个节点的指针上限为2d而不是2d+1。<br>2.内节点不存储data，只存储key；叶子节点不存储指针。</p>
-<ul>
-<li><p>如图所示是个简单的B+Tree</p>
-</li>
-<li><p><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_3.png" alt="alt text"></p>
-</li>
-</ul>
-<h3 id="MySQL索引实现"><a href="#MySQL索引实现" class="headerlink" title="MySQL索引实现"></a>MySQL索引实现</h3><p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎的索引实现方式。</p>
-<h4 id="MyISAM索引实现"><a href="#MyISAM索引实现" class="headerlink" title="MyISAM索引实现"></a>MyISAM索引实现</h4><p>MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：</p>
-<ul>
-<li><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_8.png" alt="alt text"></li>
-</ul>
-<blockquote>
-<p>这里设表一共有三列，假设我们以Col1为主键，则图8是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：</p>
-</blockquote>
-<ul>
-<li><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_9.png" alt="alt text"></li>
-</ul>
-<p>同样也是一颗B+Tree，data域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</p>
-<p>MyISAM的索引方式也叫做“非聚集”的，之所以这么称呼是为了与InnoDB的聚集索引区分</p>
-<h4 id="InnoDB索引实现"><a href="#InnoDB索引实现" class="headerlink" title="InnoDB索引实现"></a>InnoDB索引实现</h4><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
-<p>第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。</p>
-<ul>
-<li><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_10.png" alt="alt text"></li>
-</ul>
-<p>图中是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶节点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
-<p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，下图为定义在Col3上的一个辅助索引：</p>
-<ul>
-<li><img src="http://oxdodlbnj.bkt.clouddn.com/mysql_11.png" alt="alt text"></li>
-</ul>
-<p>这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
-<p>了解不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</p>
-<p>**如何在MySQL中高性能使用索引，将会在一篇文章继续探讨</p>
-<p>  ​</p>
-
+<li>探讨如何在MySQL中高性能使用索引的
+        
+          <a class="article-more-a" href="/2017/10/19/mysql索引的数据结构和算法/#more">more >></a>
+        
       
 
       
@@ -896,6 +830,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
@@ -912,19 +854,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题探究</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
