@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/11 | lemon的博客</title>
+  <title>php异常集中定义 | lemon的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="lemon的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2017/11/index.html">
+  <meta name="description" content="PHP异常集中管理 最近因为接口写的较多，类似的php异常可以共用，故想着把一些exception按功能集中写在一起，以便管理和使用  exception抽象类 后面写的exception都继承于这个类">
+<meta name="keywords" content="php,exception">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php异常集中定义">
+<meta property="og:url" content="http://yoursite.com/2017/11/22/php异常集中定义/index.html">
 <meta property="og:site_name" content="lemon的博客">
+<meta property="og:description" content="PHP异常集中管理 最近因为接口写的较多，类似的php异常可以共用，故想着把一些exception按功能集中写在一起，以便管理和使用  exception抽象类 后面写的exception都继承于这个类">
+<meta property="og:updated_time" content="2017-11-22T11:30:18.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lemon的博客">
+<meta name="twitter:title" content="php异常集中定义">
+<meta name="twitter:description" content="PHP异常集中管理 最近因为接口写的较多，类似的php异常可以共用，故想着把一些exception按功能集中写在一起，以便管理和使用  exception抽象类 后面写的exception都继承于这个类">
   
     <link rel="alternative" href="/atom.xml" title="lemon的博客" type="application/atom+xml">
   
@@ -177,36 +182,103 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-php异常集中定义" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/22/php异常集中定义/" class="archive-article-date">
-  	<time datetime="2017-11-22T10:35:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/22/php异常集中定义/">php异常集中定义</a>
+    <h1 class="article-title" itemprop="name">
+      php异常集中定义
     </h1>
   
 
-        <div class="article-info info-on-right">
+        <!-- 显示阅读和评论数 -->
+        
+        
+        <a href="/2017/11/22/php异常集中定义/" class="archive-article-date">
+  	<time datetime="2017-11-22T10:35:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+              <span class="btn-bg"></span>
+              <span class="btn-text">文章导航</span>
+              </p>
+    	<div id="toc-article" class="toc-article">
+    	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+    		<strong class="toc-title">文章目录</strong>
+               <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP异常集中管理"><span class="toc-number">1.</span> <span class="toc-text">PHP异常集中管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#exception抽象类"><span class="toc-number">1.1.</span> <span class="toc-text">exception抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exception继承BaseException"><span class="toc-number">1.2.</span> <span class="toc-text">exception继承BaseException</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口controller中调用代码"><span class="toc-number">1.3.</span> <span class="toc-text">接口controller中调用代码</span></a></li></ol></li></ol>
+             </div>
+       <script type="text/javascript">
+    	function showToc(){
+    		var toc_article = document.getElementById("toc-article");
+    		var show_toc_btn = document.getElementById("show-toc-btn");
+    		toc_article.setAttribute("style","display:block");
+    		show_toc_btn.setAttribute("style","display:none");
+    		};
+    	function showBtn(){
+    		var toc_article = document.getElementById("toc-article");
+    		var show_toc_btn = document.getElementById("show-toc-btn");
+    		toc_article.setAttribute("style","display:none");
+    		show_toc_btn.setAttribute("style","display:block");
+    		};
+       </script>
           
+    <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP异常集中管理"><a href="#PHP异常集中管理" class="headerlink" title="PHP异常集中管理"></a>PHP异常集中管理</h1><blockquote>
+<p>最近因为接口写的较多，类似的php异常可以共用，故想着把一些exception按功能集中写在一起，以便管理和使用</p>
+</blockquote>
+<h2 id="exception抽象类"><a href="#exception抽象类" class="headerlink" title="exception抽象类"></a>exception抽象类</h2><ul>
+<li>后面写的exception都继承于这个类</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">/**</div><div class="line"> * Created by PhpStorm.</div><div class="line"> * Date: 2017/9/22 0022</div><div class="line"> * Time: 11:57</div><div class="line"> */</div><div class="line"></div><div class="line">namespace app\exception;</div><div class="line"></div><div class="line"></div><div class="line">use think\Exception;</div><div class="line"></div><div class="line"> abstract class BaseException extends Exception</div><div class="line">&#123;</div><div class="line">    protected $code ;</div><div class="line">    protected $message;</div><div class="line">    protected $data;</div><div class="line"></div><div class="line">    public function __construct($exceptKey)&#123;</div><div class="line">        $exception = $this-&gt;$exceptKey;</div><div class="line">        if ($exception)&#123;</div><div class="line">            $this-&gt;code = $exception[&apos;code&apos;];</div><div class="line">            $this-&gt;message = $exception[&apos;message&apos;];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public function  __get($name) &#123;</div><div class="line">        $res = array();</div><div class="line">        if(array_key_exists($name, $this-&gt;data)) &#123;</div><div class="line">            $res = $this-&gt;data[$name];</div><div class="line">        &#125;</div><div class="line">        return $res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="exception继承BaseException"><a href="#exception继承BaseException" class="headerlink" title="exception继承BaseException"></a>exception继承BaseException</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">/**</div><div class="line"> * Created by PhpStorm.</div><div class="line"> * Date: 2017/9/20 0020</div><div class="line"> * Time: 15:57</div><div class="line"> */</div><div class="line"></div><div class="line">namespace app\exception;</div><div class="line"></div><div class="line">class BindException extends BaseException</div><div class="line">&#123;</div><div class="line">    protected $data = [</div><div class="line">        &apos;USER_ID_ERROR&apos;   =&gt; [&apos;code&apos;=&gt;&apos;1001&apos;,&apos;message&apos;=&gt;&apos;用户ID不正确&apos;],</div><div class="line">        &apos;INVITE_CODE_ERROR&apos;   =&gt; [&apos;code&apos;=&gt;&apos;1002&apos;,&apos;message&apos;=&gt;&apos;邀请码不正确&apos;],</div><div class="line">    ];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="接口controller中调用代码"><a href="#接口controller中调用代码" class="headerlink" title="接口controller中调用代码"></a>接口controller中调用代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">/**</div><div class="line"> * Created by PhpStorm.</div><div class="line"> * Date: 2017/9/21 0021</div><div class="line"> * Time: 19:23</div><div class="line"> */</div><div class="line"></div><div class="line">namespace app\api\controller;</div><div class="line"></div><div class="line">use think\Controller;</div><div class="line">use app\common\service\BindService;</div><div class="line">use app\exception\BindException;</div><div class="line"></div><div class="line">class Bind extends Controller</div><div class="line">&#123;</div><div class="line">    public function bindAgent()</div><div class="line">    &#123;</div><div class="line">        $bindService = new BindService;</div><div class="line">        $paramArr = input();</div><div class="line">        try&#123;</div><div class="line">            $bindService-&gt;checkBindParam($paramArr);</div><div class="line">        &#125;catch(BindException $e) &#123;</div><div class="line">            return [&apos;code&apos;=&gt;$e-&gt;getCode(),&apos;message&apos;=&gt;$e-&gt;getMessage(),&apos;data&apos;=&gt;$data=[]];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -222,57 +294,140 @@ var _hmt = _hmt || [];
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/11/22/php异常集中定义/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/21/nginx配置详解/" class="archive-article-date">
-  	<time datetime="2017-11-21T02:39:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-21</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/21/nginx配置详解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">nginx配置详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/21/nginx配置详解/">nginx配置详解</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP异常集中管理"><span class="toc-number">1.</span> <span class="toc-text">PHP异常集中管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#exception抽象类"><span class="toc-number">1.1.</span> <span class="toc-text">exception抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exception继承BaseException"><span class="toc-number">1.2.</span> <span class="toc-text">exception继承BaseException</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口controller中调用代码"><span class="toc-number">1.3.</span> <span class="toc-text">接口controller中调用代码</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
+        
+    </div>
+</aside>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTIwOS83NzU4" style="margin: 0 50px  0 50px">
+    	<script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+    	</script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
   
 
-    
+
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -305,8 +460,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
