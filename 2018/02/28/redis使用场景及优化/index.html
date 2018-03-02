@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: mysql | lemon的博客</title>
+  <title>redis使用场景及优化 | lemon的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="lemon的博客">
-<meta property="og:url" content="http://yoursite.com/tags/mysql/index.html">
+  <meta name="description" content="Redis内存使用优化与存储使用场景StringString数据结构是简单的key-value类型，value其实不仅可以是String，也可以是数字。常规key-value缓存应用；常规计数：微博数，粉丝数等。 hashRedis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。存储部分变更的数据，如用户信息等。 listlist就是链表，略有数据结">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis使用场景及优化">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/redis使用场景及优化/index.html">
 <meta property="og:site_name" content="lemon的博客">
+<meta property="og:description" content="Redis内存使用优化与存储使用场景StringString数据结构是简单的key-value类型，value其实不仅可以是String，也可以是数字。常规key-value缓存应用；常规计数：微博数，粉丝数等。 hashRedis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。存储部分变更的数据，如用户信息等。 listlist就是链表，略有数据结">
+<meta property="og:updated_time" content="2018-03-02T02:59:03.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lemon的博客">
+<meta name="twitter:title" content="redis使用场景及优化">
+<meta name="twitter:description" content="Redis内存使用优化与存储使用场景StringString数据结构是简单的key-value类型，value其实不仅可以是String，也可以是数字。常规key-value缓存应用；常规计数：微博数，粉丝数等。 hashRedis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。存储部分变更的数据，如用户信息等。 listlist就是链表，略有数据结">
   
     <link rel="alternative" href="/atom.xml" title="lemon的博客" type="application/atom+xml">
   
@@ -177,114 +182,352 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-redis使用场景及优化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/mysql性能优化/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:12:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/mysql性能优化/">mysql性能优化</a>
+    <h1 class="article-title" itemprop="name">
+      redis使用场景及优化
     </h1>
   
 
-        <div class="article-info info-on-right">
+        <!-- 显示阅读和评论数 -->
+        
+        
+        <a href="/2018/02/28/redis使用场景及优化/" class="archive-article-date">
+  	<time datetime="2018-02-28T08:19:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-28</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+              <span class="btn-bg"></span>
+              <span class="btn-text">文章导航</span>
+              </p>
+    	<div id="toc-article" class="toc-article">
+    	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+    		<strong class="toc-title">文章目录</strong>
+               <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis内存使用优化与存储"><span class="toc-number">1.</span> <span class="toc-text">Redis内存使用优化与存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景"><span class="toc-number">1.1.</span> <span class="toc-text">使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#String"><span class="toc-number">1.1.1.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash"><span class="toc-number">1.1.2.</span> <span class="toc-text">hash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">1.1.3.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set"><span class="toc-number">1.1.4.</span> <span class="toc-text">set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sorted-set"><span class="toc-number">1.1.5.</span> <span class="toc-text">sorted set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pub-Sub"><span class="toc-number">1.1.6.</span> <span class="toc-text">Pub/Sub</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用内存优化手段与参数"><span class="toc-number">1.2.</span> <span class="toc-text">常用内存优化手段与参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis的持久化机制"><span class="toc-number">1.3.</span> <span class="toc-text">Redis的持久化机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定时快照方式-snapshot-："><span class="toc-number">1.3.1.</span> <span class="toc-text">定时快照方式(snapshot)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于语句追加方式-aof-："><span class="toc-number">1.3.2.</span> <span class="toc-text">基于语句追加方式(aof)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟内存方式："><span class="toc-number">1.3.3.</span> <span class="toc-text">虚拟内存方式：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis持久化磁盘IO方式及其带来的问题"><span class="toc-number">1.4.</span> <span class="toc-text">Redis持久化磁盘IO方式及其带来的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+             </div>
+       <script type="text/javascript">
+    	function showToc(){
+    		var toc_article = document.getElementById("toc-article");
+    		var show_toc_btn = document.getElementById("show-toc-btn");
+    		toc_article.setAttribute("style","display:block");
+    		show_toc_btn.setAttribute("style","display:none");
+    		};
+    	function showBtn(){
+    		var toc_article = document.getElementById("toc-article");
+    		var show_toc_btn = document.getElementById("show-toc-btn");
+    		toc_article.setAttribute("style","display:none");
+    		show_toc_btn.setAttribute("style","display:block");
+    		};
+       </script>
           
+    <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Redis内存使用优化与存储"><a href="#Redis内存使用优化与存储" class="headerlink" title="Redis内存使用优化与存储"></a>Redis内存使用优化与存储</h2><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><h4 id="String"><a href="#String" class="headerlink" title="String"></a>String</h4><p>String数据结构是简单的key-value类型，value其实不仅可以是String，也可以是数字。<br>常规key-value缓存应用；<br>常规计数：微博数，粉丝数等。</p>
+<h4 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h4><p>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。<br>存储部分变更的数据，如用户信息等。</p>
+<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>list就是链表，略有数据结构知识的人都应该能理解其结构。使用Lists结构，我们可以轻松地实现最新消息排行等功能。List的另一个应用就是消息队列，可以利用List的PUSH操作，将任务存在List中，然后工作线程再用POP操作将任务取出进行执行。Redis还提供了操作List中某一段的api，你可以直接查询，删除List中某一段的元素。<br>Redis的list是每个子元素都是String类型的双向链表，可以通过push和pop操作从列表的头部或者尾部添加或者删除元素，这样List即可以作为栈，也可以作为队列。<br><a id="more"></a><br>消息队列系统<br>使用list可以构建队列系统，使用sorted set甚至可以构建有优先级的队列系统。<br>比如：将Redis用作日志收集器<br>实际上还是一个队列，多个端点将日志信息写入Redis，然后一个worker统一将所有日志写到磁盘。</p>
+<p>取最新N个数据的操作</p>
+<ul>
+<li>//把当前登录人添加到链表里</li>
+<li>ret = r.lpush(“login:last_login_times”, uid)</li>
+<li>//保持链表只有N位</li>
+<li>ret = redis.ltrim(“login:last_login_times”, 0, N-1)</li>
+<li>//获得前N个最新登陆的用户Id列表</li>
+<li>last_login_list = r.lrange(“login:last_login_times”, 0, N-1)</li>
+</ul>
+<p>比如sina微博:<br>在Redis中我们的最新微博ID使用了常驻缓存，这是一直更新的。但是做了限制不能超过5000个ID，因此获取ID的函数会一直询问Redis。只有在start/count参数超出了这个范围的时候，才需要去访问数据库。<br>系统不会像传统方式那样“刷新”缓存，Redis实例中的信息永远是一致的。SQL数据库（或是硬盘上的其他类型数据库）只是在用户需要获取“很远”的数据时才会被触发，而主页或第一个评论页是不会麻烦到硬盘上的数据库了。</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><p>set就是一个集合，集合的概念就是一堆不重复值的组合。利用Redis提供的set数据结构，可以存储一些集合性的数据。set中的元素是没有顺序的。<br>案例：<br>在微博应用中，可以将一个用户所有的关注人存在一个集合中，将其所有粉丝存在一个集合。Redis还为集合提供了求交集、并集、差集等操作，可以非常方便的实现如共同关注、共同喜好、二度好友等功能，对上面的所有集合操作，你还可以使用不同的命令选择将结果返回给客户端还是存集到一个新的集合中。</p>
+<p>交集，并集，差集</p>
+<p>//book表存储book名称</p>
+<ul>
+<li>set book:1:name “The Ruby Programming Language”</li>
+<li>set book:2:name “Ruby on rail”</li>
+<li>set book:3:name “Programming Erlang”</li>
+</ul>
+<p>//tag表使用集合来存储数据，因为集合擅长求交集、并集</p>
+<ul>
+<li>sadd tag:ruby 1</li>
+<li>sadd tag:ruby 2</li>
+<li>sadd tag:web 2</li>
+<li>sadd tag:erlang 3</li>
+</ul>
+<p>//即属于ruby又属于web的书？</p>
+<ul>
+<li>inter_list = redis.sinter(“tag:web”, “tag:ruby”)<br>//即属于ruby，但不属于web的书？</li>
+<li>diff_list = redis.sdiff(“tag:ruby”, “tag:web”)<br>//属于ruby和属于web的书的合集？</li>
+<li>union_list = redis.sunion(“tag:ruby”, “tag:web”)</li>
+</ul>
+<p>获取某段时间所有数据去重值<br>这个使用Redis的set数据结构最合适了，只需要不断地将数据往set中扔就行了，set意为集合，所以会自动排重。</p>
+<h4 id="sorted-set"><a href="#sorted-set" class="headerlink" title="sorted set"></a>sorted set</h4><p>和set相比，sorted set增加了一个权重参数score，使得集合中的元素能够按score进行有序排列，比如一个存储全班同学成绩的sorted set，其集合value可以是同学的学号，而score就可以是其考试得分，这样在数据插入集合的时候，就已经进行了天然的排序。可以用sorted set来做带权重的队列，比如普通消息的score为1，重要消息的score为2，然后工作线程可以选择按score的倒序来获取工作任务。让重要的任务优先执行。</p>
+<p>排行榜应用，取TOP N操作<br>这个需求与上面需求的不同之处在于，前面操作以时间为权重，这个是以某个条件为权重，比如按顶的次数排序，这时候就需要我们的sorted set出马了，将你要排序的值设置成sorted set的score，将具体的数据设置成相应的value，每次只需要执行一条ZADD命令即可。</p>
+<p>//将登录次数和用户统一存储在一个sorted set里</p>
+<ul>
+<li>zadd login:login_times 5 1</li>
+<li>zadd login:login_times 1 2</li>
+<li>zadd login:login_times 2 3</li>
+</ul>
+<p>//当用户登录时，对该用户的登录次数自增1<br>ret = r.zincrby(“login:login_times”, 1, uid)<br>//那么如何获得登录次数最多的用户呢，逆序排列取得排名前N的用户<br>ret = r.zrevrange(“login:login_times”, 0, N-1)</p>
+<p>比如在线游戏的排行榜，根据得分你通常想要：</p>
+<pre><code>- 列出前100名高分选手
+
+- 列出某用户当前的全球排名
+</code></pre><p>这些操作对于Redis来说小菜一碟，即使你有几百万个用户，每分钟都会有几百万个新的得分。<br>模式是这样的，每次获得新得分时，我们用这样的代码：</p>
+<p>ZADD leaderboard <score> <username><br>1<br>你可能用userID来取代username，这取决于你是怎么设计的。<br>得到前100名高分用户很简单：</username></score></p>
+<p>ZREVRANGE leaderboard 0 99<br>1<br>用户的全球排名也相似，只需要：</p>
+<p>ZRANK leaderboard <username><br>1<br>需要精准设定过期时间的应用<br>比如你可以把上面说到的sorted set的score值设置成过期时间的时间戳，那么就可以简单地通过过期时间排序，定时清除过期数据了，不仅是清除Redis中的过期数据，你完全可以把Redis里这个过期时间当成是对数据库中数据的索引，用Redis来找出哪些数据需要过期删除，然后再精准地从数据库中删除相应的记录。</username></p>
+<p>范围查找<br>来自Redis在Google Group上的一个问题，有一位同学发贴求助，说要解决如下的一个问题：他有一个IP范围对应地址的列表，现在需要给出一个IP的情况下，迅速的查找到这个IP在哪个范围，也就是要判断此IP的所有地。这个问题引来了Redis作者Salvatore Sanfilippo（@antirez）的回答。解答如下：<br>例如有下面两个范围，10－20和30－40</p>
+<ul>
+<li>A_start 10, A_end 20</li>
+<li>B_start 30, B_end 40<br>我们将这两个范围的起始位置存在Redis的sorted set数据结构中，基本范围起始值作为score，范围名加start和end为其value值：<br>-</li>
+<li>redis 127.0.0.1:6379&gt; zadd ranges 10 A_start</li>
+<li>1</li>
+<li>redis 127.0.0.1:6379&gt; zadd ranges 20 A_end</li>
+<li>1</li>
+<li>redis 127.0.0.1:6379&gt; zadd ranges 30 B_start</li>
+<li>1</li>
+<li>redis 127.0.0.1:6379&gt; zadd ranges 40 B_end</li>
+<li>1</li>
+</ul>
+<p>这样数据在插入sorted set后，相当于是将这些起始位置按顺序排列好了。<br>现在我需要查找15这个值在哪一个范围中，只需要进行如下的zrangbyscore查找：</p>
+<ul>
+<li>redis 127.0.0.1:6379&gt; zrangebyscore ranges (15 +inf LIMIT 0 1</li>
+<li>“A_end”</li>
+</ul>
+<p>这个命令的意思是在Sorted Sets中查找大于15的第一个值。（+inf在Redis中表示正无穷大，15前面的括号表示&gt;15而非&gt;=15）<br>查找的结果是A_end，由于所有值是按顺序排列的，所以可以判定15是在A_start到A_end区间上，也就是说15是在A这个范围里。至此大功告成。<br>当然，如果你查找到的是一个start，比如咱们用25，执行下面的命令:</p>
+<ul>
+<li>redis 127.0.0.1:6379&gt; zrangebyscore ranges (25 +inf LIMIT 0 1</li>
+<li>“B_start”<br>返回结果表明其下一个节点是一个start节点，也就是说25这个值不处在任何start和end之间，不属于任何范围。<br>当然，这个例子仅适用于类似上面的IP范围查找的案例，因为这些值范围之间没有重合。如果是有重合的情况，这个问题本身也就变成了一个一对多的问题。</li>
+</ul>
+<h4 id="Pub-Sub"><a href="#Pub-Sub" class="headerlink" title="Pub/Sub"></a>Pub/Sub</h4><p>Pub/Sub 从字面上理解就是发布（Publish）与订阅（Subscribe），在Redis中，你可以设定对某一个key值进行消息发布及消息订阅，当一个key值上进行了消息发布后，所有订阅它的客户端都会收到相应的消息。这一功能最明显的用法就是用作实时消息系统，比如普通的即时聊天，群聊等功能。</p>
+<p>使用场景</p>
+<p>Pub/Sub构建实时消息系统</p>
+<p>Redis的Pub/Sub系统可以构建实时的消息系统<br>比如很多用Pub/Sub构建的实时聊天系统的例子。</p>
+<h3 id="常用内存优化手段与参数"><a href="#常用内存优化手段与参数" class="headerlink" title="常用内存优化手段与参数"></a>常用内存优化手段与参数</h3><p>通过我们上面的一些实现上的分析可以看出redis实际上的内存管理成本非常高，即占用了过多的内存，作者对这点也非常清楚，所以提供了一系列的参数和手段来控制和节省内存，我们分别来讨论下。</p>
+<p>首先最重要的一点是不要开启Redis的VM选项，即虚拟内存功能，这个本来是作为Redis存储超出物理内存数据的一种数据在内存与磁盘换入换出的一个持久化策略，但是其内存管理成本也非常的高，并且我们后续会分析此种持久化策略并不成熟，所以要关闭VM功能，请检查你的redis.conf文件中 vm-enabled 为 no。</p>
+<p>其次最好设置下redis.conf中的maxmemory选项，该选项是告诉Redis当使用了多少物理内存后就开始拒绝后续的写入请求，该参数能很好的保护好你的Redis不会因为使用了过多的物理内存而导致swap,最终严重影响性能甚至崩溃。</p>
+<p>另外Redis为不同数据类型分别提供了一组参数来控制内存使用，我们在前面详细分析过Redis Hash是value内部为一个HashMap，如果该Map的成员数比较少，则会采用类似一维线性的紧凑格式来存储该Map, 即省去了大量指针的内存开销，这个参数控制对应在redis.conf配置文件中下面2项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hash-max-zipmap-entries 64</div><div class="line">hash-max-zipmap-value 512</div><div class="line">hash-max-zipmap-entries</div></pre></td></tr></table></figure>
+<p>含义是当value这个Map内部不超过多少个成员时会采用线性紧凑格式存储，默认是64,即value内部有64个以下的成员就是使用线性紧凑存储，超过该值自动转成真正的HashMap。</p>
+<p>hash-max-zipmap-value 含义是当 value这个Map内部的每个成员值长度不超过多少字节就会采用线性紧凑存储来节省空间。</p>
+<p>以上2个条件任意一个条件超过设置值都会转换成真正的HashMap，也就不会再节省内存了，那么这个值是不是设置的越大越好呢，答案当然是否定的，HashMap的优势就是查找和操作的时间复杂度都是O(1)的，而放弃Hash采用一维存储则是O(n)的时间复杂度，如果</p>
+<p>成员数量很少，则影响不大，否则会严重影响性能，所以要权衡好这个值的设置，总体上还是最根本的时间成本和空间成本上的权衡。</p>
+<p>同样类似的参数还有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list-max-ziplist-entries 512</div></pre></td></tr></table></figure>
+<p>说明：list数据类型多少节点以下会采用去指针的紧凑存储格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list-max-ziplist-value 64</div></pre></td></tr></table></figure>
+<p>说明：list数据类型节点值大小小于多少字节会采用紧凑存储格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set-max-intset-entries 512</div></pre></td></tr></table></figure>
+<p>说明：set数据类型内部数据如果全部是数值型，且包含多少节点以下会采用紧凑格式存储。</p>
+<p>最后想说的是Redis内部实现没有对内存分配方面做过多的优化，在一定程度上会存在内存碎片，不过大多数情况下这个不会成为Redis的性能瓶颈，不过如果在Redis内部存储的大部分数据是数值型的话，Redis内部采用了一个shared integer的方式来省去分配内存的开销，即在系统启动时先分配一个从1~n 那么多个数值对象放在一个池子中，如果存储的数据恰好是这个数值范围内的数据，则直接从池子里取出该对象，并且通过引用计数的方式来共享，这样在系统存储了大量数值下，也能一定程度上节省内存并且提高性能，这个参数值n的设置需要修改源代码中的一行宏定义REDIS_SHARED_INTEGERS，该值默认是10000，可以根据自己的需要进行修改，修改后重新编译就可以了。</p>
+<h3 id="Redis的持久化机制"><a href="#Redis的持久化机制" class="headerlink" title="Redis的持久化机制"></a>Redis的持久化机制</h3><p>Redis由于支持非常丰富的内存数据结构类型，如何把这些复杂的内存组织方式持久化到磁盘上是一个难题，所以Redis的持久化方式与传统数据库的方式有比较多的差别，Redis一共支持四种持久化方式，分别是：</p>
+<p>定时快照方式(snapshot)<br>基于语句追加文件的方式(aof)<br>虚拟内存(vm)<br>Diskstore方式<br>在设计思路上，前两种是基于全部数据都在内存中，即小数据量下提供磁盘落地功能，而后两种方式则是作者在尝试存储数据超过物理内存时，即大数据量的数据存储，截止到本文，后两种持久化方式仍然是在实验阶段，并且vm方式基本已经被作者放弃，所以实际能在生产环境用的只有前两种，换句话说Redis目前还只能作为小数据量存储（全部数据能够加载在内存中），海量数据存储方面并不是Redis所擅长的领域。下面分别介绍下这几种持久化方式：</p>
+<h4 id="定时快照方式-snapshot-："><a href="#定时快照方式-snapshot-：" class="headerlink" title="定时快照方式(snapshot)："></a>定时快照方式(snapshot)：</h4><p>该持久化方式实际是在Redis内部一个定时器事件，每隔固定时间去检查当前数据发生的改变次数与时间是否满足配置的持久化触发的条件，如果满足则通过操作系统fork调用来创建出一个子进程，这个子进程默认会与父进程共享相同的地址空间，这时就可以通过子进程来遍历整个内存来进行存储操作，而主进程则仍然可以提供服务，当有写入时由操作系统按照内存页(page)为单位来进行copy-on-write保证父子进程之间不会互相影响。</p>
+<p>该持久化的主要缺点是定时快照只是代表一段时间内的内存映像，所以系统重启会丢失上次快照与重启之间所有的数据。</p>
+<h4 id="基于语句追加方式-aof-："><a href="#基于语句追加方式-aof-：" class="headerlink" title="基于语句追加方式(aof)："></a>基于语句追加方式(aof)：</h4><p>aof方式实际类似mysql的基于语句的binlog方式，即每条会使Redis内存数据发生改变的命令都会追加到一个log文件中，也就是说这个log文件就是Redis的持久化数据。</p>
+<p>aof的方式的主要缺点是追加log文件可能导致体积过大，当系统重启恢复数据时如果是aof的方式则加载数据会非常慢，几十G的数据可能需要几小时才能加载完，当然这个耗时并不是因为磁盘文件读取速度慢，而是由于读取的所有命令都要在内存中执行一遍。另外由于每条命令都要写log,所以使用aof的方式，Redis的读写性能也会有所下降。</p>
+<h4 id="虚拟内存方式："><a href="#虚拟内存方式：" class="headerlink" title="虚拟内存方式："></a>虚拟内存方式：</h4><p>虚拟内存方式是Redis来进行用户空间的数据换入换出的一个策略，此种方式在实现的效果上比较差，主要问题是代码复杂，重启慢，复制慢等等，目前已经被作者放弃。</p>
+<p>diskstore方式：</p>
+<p>diskstore方式是作者放弃了虚拟内存方式后选择的一种新的实现方式，也就是传统的B-tree的方式，目前仍在实验阶段，后续是否可用我们可以拭目以待。</p>
+<h3 id="Redis持久化磁盘IO方式及其带来的问题"><a href="#Redis持久化磁盘IO方式及其带来的问题" class="headerlink" title="Redis持久化磁盘IO方式及其带来的问题"></a>Redis持久化磁盘IO方式及其带来的问题</h3><p>有Redis线上运维经验的人会发现Redis在物理内存使用比较多，但还没有超过实际物理内存总容量时就会发生不稳定甚至崩溃的问题，有人认为是基于快照方式持久化的fork系统调用造成内存占用加倍而导致的，这种观点是不准确的，因为fork 调用的copy-on-write机制是基于操作系统页这个单位的，也就是只有有写入的脏页会被复制，但是一般你的系统不会在短时间内所有的页都发生了写入而导致复制，那么是什么原因导致Redis崩溃的呢？</p>
+<p>答案是Redis的持久化使用了Buffer IO造成的，所谓Buffer IO是指Redis对持久化文件的写入和读取操作都会使用物理内存的Page Cache,而大多数数据库系统会使用Direct IO来绕过这层Page Cache并自行维护一个数据的Cache，而当Redis的持久化文件过大(尤其是快照文件)，并对其进行读写时，磁盘文件中的数据都会被加载到物理内存中作为操作系统对该文件的一层Cache,而这层Cache的数据与Redis内存中管理的数据实际是重复存储的，虽然内核在物理内存紧张时会做Page Cache的剔除工作，但内核很可能认为某块Page Cache更重要，而让你的进程开始Swap ,这时你的系统就会开始出现不稳定或者崩溃了。我们的经验是当你的Redis物理内存使用超过内存总容量的3/5时就会开始比较危险了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>根据业务需要选择合适的数据类型，并为不同的应用场景设置相应的紧凑存储参数。</li>
+<li>当业务场景不需要数据持久化时，关闭所有的持久化方式可以获得最佳的性能以及最大的内存使用量。</li>
+<li>如果需要使用持久化，根据是否可以容忍重启丢失部分数据在快照方式与语句追加方式之间选择其一，不要使用虚拟内存以及diskstore方式。</li>
+<li>不要让你的Redis所在机器物理内存使用超过实际内存总量的3/5。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">索引</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">慢查询</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/28/redis使用场景及优化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/19/mysql索引的数据结构和算法/" class="archive-article-date">
-  	<time datetime="2017-10-19T06:40:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/25/php的简洁之道/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">php的简洁之道</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/19/mysql索引的数据结构和算法/">mysql索引的数据结构和算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">索引</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis内存使用优化与存储"><span class="toc-number">1.</span> <span class="toc-text">Redis内存使用优化与存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用场景"><span class="toc-number">1.1.</span> <span class="toc-text">使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#String"><span class="toc-number">1.1.1.</span> <span class="toc-text">String</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash"><span class="toc-number">1.1.2.</span> <span class="toc-text">hash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-number">1.1.3.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set"><span class="toc-number">1.1.4.</span> <span class="toc-text">set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sorted-set"><span class="toc-number">1.1.5.</span> <span class="toc-text">sorted set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pub-Sub"><span class="toc-number">1.1.6.</span> <span class="toc-text">Pub/Sub</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用内存优化手段与参数"><span class="toc-number">1.2.</span> <span class="toc-text">常用内存优化手段与参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis的持久化机制"><span class="toc-number">1.3.</span> <span class="toc-text">Redis的持久化机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定时快照方式-snapshot-："><span class="toc-number">1.3.1.</span> <span class="toc-text">定时快照方式(snapshot)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于语句追加方式-aof-："><span class="toc-number">1.3.2.</span> <span class="toc-text">基于语句追加方式(aof)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#虚拟内存方式："><span class="toc-number">1.3.3.</span> <span class="toc-text">虚拟内存方式：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis持久化磁盘IO方式及其带来的问题"><span class="toc-number">1.4.</span> <span class="toc-text">Redis持久化磁盘IO方式及其带来的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
+        
+    </div>
+</aside>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTIwOS83NzU4" style="margin: 0 50px  0 50px">
+    	<script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+    	</script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
   
 
-    
+
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -317,9 +560,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
