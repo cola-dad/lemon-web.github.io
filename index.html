@@ -179,6 +179,170 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-查看Linux服务器硬盘使用情况" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/查看Linux服务器硬盘使用情况/">查看Linux服务器硬盘使用情况</a>
+    </h1>
+  
+
+        <!-- 显示阅读和评论数 -->
+        
+        
+        <a href="/2018/03/05/查看Linux服务器硬盘使用情况/" class="archive-article-date">
+  	<time datetime="2018-03-05T07:52:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-05</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+    
+    <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="linux服务器状态、性能相关命令"><a href="#linux服务器状态、性能相关命令" class="headerlink" title="linux服务器状态、性能相关命令"></a>linux服务器状态、性能相关命令</h2><h3 id="查看Linux服务器CPU详细情况"><a href="#查看Linux服务器CPU详细情况" class="headerlink" title="查看Linux服务器CPU详细情况"></a>查看Linux服务器CPU详细情况</h3><ul>
+<li>查看CPU的信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# cat /proc/cpuinfo</div></pre></td></tr></table></figure>
+<ul>
+<li><p>查看物理CPU的个数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host /]# cat /proc/cpuinfo | grep &quot;physical id&quot; | sort | uniq | wc -l</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看每个物理CPU的核数</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host /]# cat /proc/cpuinfo | grep &quot;cpu cores&quot; | uniq</div></pre></td></tr></table></figure>
+<ul>
+<li>逻辑CPU的个数（逻辑CPU = 物理CPU个数*核数）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host /]# cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="查看Linux服务器内存情况"><a href="#查看Linux服务器内存情况" class="headerlink" title="查看Linux服务器内存情况"></a>查看Linux服务器内存情况</h3><ul>
+<li>查看内存使用情况<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# free -m</div><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:           372        256        115          0         17        158</div><div class="line">-/+ buffers/cache:         81        290</div><div class="line">Swap:          509          0        509</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>total：内存总数</p>
+<p>user：已使用内存数</p>
+<p>free：空闲内存数</p>
+<p>shared：多进程共享内存数</p>
+<p>buffers：缓冲内存数</p>
+<p>cached：缓存内存数<br>可用内存 = free+buffers+cached<br>已用内存 = used-buffers-cached<br>swap 交换内存数，此项可判断内存是否够用的标准</p>
+</blockquote>
+<h3 id="查看Linux服务器硬盘使用情况"><a href="#查看Linux服务器硬盘使用情况" class="headerlink" title="查看Linux服务器硬盘使用情况"></a>查看Linux服务器硬盘使用情况</h3><ul>
+<li><p>查看硬盘及分区信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# fdisk -l</div><div class="line">Disk /dev/sda: 10.7 GB, 10737418240 bytes</div><div class="line">255 heads, 63 sectors/track, 1305 cylinders</div><div class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</div><div class="line">   Device Boot      Start         End      Blocks   Id  System</div><div class="line">/dev/sda1   *           1          13      104391   83  Linux</div><div class="line">/dev/sda2              14          78      522112+  82  Linux swap / Solaris</div><div class="line">/dev/sda3              79        1305     9855877+  83  Linux</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查文件系统的磁盘空间占用情况</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# df -h</div><div class="line">Filesystem            Size  Used Avail Use% Mounted on</div><div class="line">/dev/sda3             9.2G  6.4G  2.3G  74% /</div><div class="line">/dev/sda1              99M   12M   82M  13% /boot</div><div class="line">tmpfs                 187M     0  187M   0% /dev/shm</div><div class="line">/dev/hdc              4.1G  4.1G     0 100% /mnt</div></pre></td></tr></table></figure>
+<ul>
+<li>查看硬盘的I/O性能</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@host /]# iostat -d -x -k 1 5</div><div class="line">#iostaat是含在套装systat中，在CentOs5.5用命令yum -y install sysstat来安装</div></pre></td></tr></table></figure>
+<ul>
+<li><p>查看指定目录的大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@host /]# du -sh /bin/</div><div class="line">7.8M    /bin/</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看当前目录下的文件占用率</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@host /]# du -cks * | sort -rn |head -n 10</div><div class="line">10953077    total</div><div class="line">4442100    var</div><div class="line">4289198    mnt</div><div class="line">1790236    usr</div><div class="line">152848    etc</div><div class="line">132080    lib</div><div class="line">65604    swapfile</div><div class="line">34184    sbin</div><div class="line">20804    lib64</div><div class="line">9840    tftpboot</div></pre></td></tr></table></figure>
+<ul>
+<li><p>将指定的输入文件复制到指定的输出文件中</p>
+</li>
+<li><p>利用dd命令可以制作交换文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@host /]# dd if=/dev/zero of=/sampfile bs=1024 count=65536</div><div class="line">65536+0 records in</div><div class="line">65536+0 records out</div><div class="line">67108864 bytes (67 MB) copied, 1.04575 seconds, 64.2 MB/s</div></pre></td></tr></table></figure>
+</li>
+<li><p>制作ISO</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host /]# dd if=/dev/cdrom of=/root/cd1.iso</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="查看Linux服务器的平均负载"><a href="#查看Linux服务器的平均负载" class="headerlink" title="查看Linux服务器的平均负载"></a>查看Linux服务器的平均负载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@host /]# uptime</div><div class="line"> 12:39:12 up  2:50,  3 users,  load average: 0.00, 0.03, 0.00</div><div class="line">[root@host /]# w</div><div class="line"> 12:39:59 up  2:50,  3 users,  load average: 0.00, 0.03, 0.00</div><div class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT</div><div class="line">root     tty1     -                09:53   32:17   0.36s  0.36s -bash</div><div class="line">root     pts/0    192.168.1.102    10:23    1:54m  0.03s  0.03s -bash</div><div class="line">root     pts/1    192.168.1.105    12:16    0.00s  0.09s  0.02s w</div></pre></td></tr></table></figure>
+<h3 id="监控Linux服务器的整体性能"><a href="#监控Linux服务器的整体性能" class="headerlink" title="监控Linux服务器的整体性能"></a>监控Linux服务器的整体性能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@host /]# vmstat 1 4</div><div class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu------</div><div class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</div><div class="line"> 0  0      0  50464  50096 101356    0    0    21    13  925  183  0  0 99  1  0</div><div class="line"> 0  0      0  50464  50096 101380    0    0     0     0  830   18  0  0 100  0  0</div><div class="line"> 0  0      0  50464  50096 101380    0    0     0     0  833   27  0  0 100  0  0</div><div class="line"> 0  0      0  50464  50104 101372    0    0     0    32  822   27  0  0 99  1  0</div></pre></td></tr></table></figure>
+<ul>
+<li><p>proces r:等待运行的进程数 b:非中断睡眠状态的进程数 w:被交换出去的可运行进程数</p>
+</li>
+<li><p>memory swpd:虚拟内存使用情况 fres:空闲的内存 buff:用作缓存的内存数（单位:KB）</p>
+</li>
+<li><p>swap si:从磁盘交换到内存的交换页数量 so:从内存交换到磁盘的交换页数量（单位:kb/秒）</p>
+</li>
+<li><p>io bi:发送到块设备的块数 bo:从块设备接收到的块数（单位:块/秒）</p>
+</li>
+<li><p>system in:每秒的中断数，包括时钟中断 cs:每秒的环境（上下文）切换数</p>
+</li>
+<li><p>cpu us:CPU使用时间 sy:CPU系统使用时间 id:闲置时间（单位:百分比）</p>
+</li>
+</ul>
+<p>标准情况下:r小于5,b约为0</p>
+<p>如果user + sys 小于70 表示系统性能较好；如果大于等于85以上，表示性能比较糟糕</p>
+<h3 id="查看Linux服务器的其他参数"><a href="#查看Linux服务器的其他参数" class="headerlink" title="查看Linux服务器的其他参数"></a>查看Linux服务器的其他参数</h3><p> 查看系统内核的版本号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@host /]# uname -a</div><div class="line">Linux host.domain.com 2.6.18-194.el5 #1 SMP Fri Apr 2 14:58:14 EDT 2010 x86_64 x86_64 x86_64 GNU/Linux</div><div class="line">[root@host /]# uname -r</div><div class="line">2.6.18-194.el5</div></pre></td></tr></table></figure></p>
+<p>查看系统32位还是64位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@host /]# ls -1F / |grep /$</div></pre></td></tr></table></figure></p>
+<p>查找是否有/lib64,有则系统为64位<br>另一种查看系统32位还是64位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@host /]# file /sbin/init</div><div class="line">/sbin/init: ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.6.9, dynamically linked (uses shared libs), for GNU/Linux 2.6.9, stripped</div></pre></td></tr></table></figure></p>
+<p>查看服务器使用的Linux发行版的相关信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@host /]# lsb_release -a</div><div class="line">LSB Version:    :core-3.1-amd64:core-3.1-ia32:core-3.1-noarch:graphics-3.1-amd64:graphics-3.1-ia32:graphics-3.1-noarch</div><div class="line">Distributor ID:    CentOS</div><div class="line">Description:    CentOS release 5.5 (Final)</div><div class="line">Release:    5.5</div><div class="line">Codename:    Final</div></pre></td></tr></table></figure></p>
+<p>查看系统已载入的相关模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@host /]# lsmod |grep ip</div><div class="line">ipv6                  435361  24</div><div class="line">xfrm_nalgo             43333  1 ipv6</div><div class="line">dm_multipath           56920  0</div><div class="line">scsi_dh                42177  1 dm_multipath</div><div class="line">dm_mod                101649  4 dm_mirror,dm_multipath,dm_raid45,dm_log</div></pre></td></tr></table></figure></p>
+<p>在linux下查看PCI设置，lspci命令能列出机器中的PCI信息，比如声卡、显卡、Modem<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@host /]# lspci | grep Ether</div><div class="line">02:01.0 Ethernet controller: Intel Corporation 82545EM Gigabit Ethernet Controller (Copper) (rev 01)</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">服务器状态</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/05/查看Linux服务器硬盘使用情况/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-redis使用场景及优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -767,11 +931,11 @@ var _hmt = _hmt || [];
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">索引</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">索引</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -1012,89 +1176,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-随笔" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/06/随笔/">序言</a>
-    </h1>
-  
-
-        <!-- 显示阅读和评论数 -->
-        
-        
-        <a href="/2017/10/06/随笔/" class="archive-article-date">
-  	<time datetime="2017-10-06T03:53:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-06</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-    
-    <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、由来"><a href="#一、由来" class="headerlink" title="一、由来"></a>一、由来</h2><h3 id="1、前世"><a href="#1、前世" class="headerlink" title="1、前世"></a>1、前世</h3><blockquote>
-<p>其实，在一年以前我就已经用hexo加github搭建过个人的博客。去年的时候，偶然看到我一个高中<a href="http://www.xiaxiongfeng.com/" target="_blank" rel="external">好哥们的博客</a>,他的博客就是用hexo+github搭的，不过那个时候仅仅是想作为一个相册使用，里面放的都是我自己和女朋友的一些照片。后来，懒得去维护了，空间和域名都渐渐荒废了。之前的那个博客可以算的上是这个的<strong>前世</strong></p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2017/10/06/随笔/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/06/随笔/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1210,6 +1291,22 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">索引</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
              
@@ -1218,23 +1315,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">索引</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color1">服务器状态</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1246,11 +1331,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">慢查询</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题探究</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1258,7 +1347,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题探究</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
             
             <div class="clearfix"></div>
